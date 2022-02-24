@@ -1,28 +1,22 @@
 library(tidyverse)
 library(rtweet)
 
-# Authenticate access to the Twitter API using the token
-# provided for class today
-api_key <- "r4UWPcaTY9JIa4w4Qr9lygsvR"
-api_secret_key <- "XYZ5j2ZFzTASaVGJjEi98DKg2pjhlRTqm4xervTlZToAKAvWko"
-access_token <- "3234588499-awSgTAungXRlOH5nrxGoqQWzdE0Q6VEM3HKwJSO"
-access_token_secret <- "umeZS3B6Qj1SQuWkWZWOHQJji2xEukew9pAgvZ8CfsB38"
-
-## store authentication information
+# store authentication information
+# use pre-generated tokens just for this class
 token <- create_token(
   app = "CFSS test 2",
-  consumer_key = api_key,
-  consumer_secret = api_secret_key,
-  access_token = access_token,
-  access_secret = access_token_secret
+  consumer_key = getOption("twitter_api_key"),
+  consumer_secret = getOption("twitter_api_secret_key"),
+  access_token = getOption("twitter_access_token"),
+  access_secret = getOption("twitter_access_token_secret")
 )
 
 # Find the 1000 most recent tweets by
 ## Katy Perry (https://twitter.com/katyperry)
 ## Kim Kardashian West (https://twitter.com/KimKardashian)
-## Ariana Grande (https://twitter.com/ArianaGrande)
+## Rihanna (https://twitter.com/rihanna)
 popstars <- get_timelines(
-  user = c("katyperry", "KimKardashian", "ArianaGrande"),
+  user = c("katyperry", "KimKardashian", "rihanna"),
   n = 1000
 )
 
