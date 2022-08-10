@@ -6,12 +6,12 @@ library(rtweet)
 auth <- rtweet_app()
 
 # use as the default token
-auth_save(auth = auth, name = "cfss")
-auth_as("cfss")
+auth_save(auth = auth, name = "cis")
+auth_as("cis")
 
 # Find the 1000 most recent tweets by
 ## Katy Perry (https://twitter.com/katyperry)
-## Kim Kardashian West (https://twitter.com/KimKardashian)
+## Kim Kardashian (https://twitter.com/KimKardashian)
 ## Rihanna (https://twitter.com/rihanna)
 
 
