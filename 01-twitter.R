@@ -3,6 +3,7 @@ library(tidyverse)
 library(rtweet)
 
 # interactively enter bearer token provided in class
+# see https://github.coecis.cornell.edu/orgs/cis-fa22/discussions/47
 auth <- rtweet_app()
 
 # use as the default token
