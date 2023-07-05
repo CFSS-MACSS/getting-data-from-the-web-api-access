@@ -32,7 +32,7 @@ Otherwise, set up the key as follows (not recommended, OK for quick check, but d
 omdb_key <- "replace_this_with_your_omdb_key"
 ```
 
-Note the key you set up here is called in the code chuck below. **Without a key this code won't run!**
+Note the key you set up here is called in the code chunk below. **Without a key this code won't run!**
 
 
 ## Using an API without a R wrapper package
@@ -184,7 +184,7 @@ sharknados_df
 
 ## Acknowledgments
 
-- Example drawn from Benjamin's Soltoff "Computing for the Social Science"
+- Example drawn from Sabrina Nardin and Benjamin Soltoff's "Computing for the Social Sciences"
 - Iterative operation drawn from Rochelle Terman's [Collecting Data from the Web](https://plsc-31101.github.io/course/collecting-data-from-the-web.html)
 
 [^api-guide]: An excellent beginning resource for APIs (including HTTP basics) is [this simple guide](https://zapier.com/learn/apis/).
