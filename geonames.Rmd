@@ -41,10 +41,10 @@ You can do a similar process for an arbitrary package or key. For example:
 
 ```{r rprofile, eval = FALSE}
 # in .Rprofile save your key and/or password
-options(this_is_my_key = "XXXX")
+#options(this_is_my_key = "mykey")
 
 # later, in the R or Rmd script type
-key <- getOption("this_is_my_key")
+#key <- getOption("mykey")
 ```
 
 This is a simple means to keep your keys private, especially if you are sharing the same authentication across several projects. Remember that using `.Rprofile` makes your code un-reproducible. In this case, that is exactly what we want!
@@ -55,7 +55,7 @@ What can we do? Get access to lots of geographical information via the various [
 
 ```{r}
 # unsafe, use the other option if you plan to share your code
-options(geonamesUsername = "my_user_name")
+#options(geonamesUsername = "my_user_name")
 ```
 
 ```{r geonames-country-info}
@@ -69,3 +69,6 @@ countryInfo %>%
 ```
 
 This country info dataset is very helpful for accessing the rest of the data, because it gives us the standardized codes for country and language.  
+```{r}
+sessioninfo::session_info()
+```
