@@ -1,0 +1,71 @@
+---
+title: "GeoNames"
+output: html_document
+---
+
+## GeoNames geographical database with `geonames`
+
+GeoNames offers geographical information for all countries and other locations. The `geonames` package provides a wrapper for R.
+
+```{r geonames, message = FALSE}
+# install.packages(geonames)
+library(geonames)
+library(tidyverse)
+```
+
+### API authentication
+
+**Many APIs require you to register for access.** Sometimes this is as quick as providing email and password (and usually you receive an email with your private API key). Other times you have to submit an application and go through a review process. Often this process is free, but some APIs require you to pay a few. 
+
+Registering for access, allows APIs to track which users are submitting queries and manage demand. If you submit too many queries too quickly, you might be **rate-limited** and your requests de-prioritized or blocked: when in doubt, check the API access policy of the web site to determine what these limits are.
+
+There are a few things we need to do to be able to use this package to access the geonames API:
+
+1. Go to [the geonames site](http://www.geonames.org/login/) and register an account 
+2. Click [here](http://www.geonames.org/enablefreewebservice) to enable the free web service
+3. Tell R your geonames username
+
+**To tell R your APIs username (and key, if necessary), you have two options** (these apply to all APIs):
+
+1. You could run the line `options(geonamesUsername = "my_user_name")` in R. This is faster but unsafe, especially if you plan to share your work and/or put it on GitHub
+1. However this is insecure. We don't want to risk committing this line and pushing it to our public GitHub page. Instead, you should create a file in the same place as your `.Rproj` file. To do that, run the following command from the R console `usethis::edit_r_profile(scope = "project")`. This will create a special file called `.Rprofile` in the same directory as your `.Rproj` file (assuming you are working in an R project). The file should open automatically in your RStudio script editor. Open the file and add `options(geonamesUsername = "my_user_name")` to that file, replacing `my_user_name` with your Geonames username.
+
+**Important:**
+
+* Make sure your `.Rprofile` ends with a blank line
+* Make sure `.Rprofile` is included in your `.gitignore` file, otherwise it will be synced with Github
+* Restart RStudio after modifying `.Rprofile` in order to load any new keys into memory
+* Spelling is important when you set the option in your `.Rprofile`
+
+You can do a similar process for an arbitrary package or key. For example:
+
+```{r rprofile, eval = FALSE}
+# in .Rprofile save your key and/or password
+options(this_is_my_key = "XXXX")
+
+# later, in the R or Rmd script type
+key <- getOption("this_is_my_key")
+```
+
+This is a simple means to keep your keys private, especially if you are sharing the same authentication across several projects. Remember that using `.Rprofile` makes your code un-reproducible. In this case, that is exactly what we want!
+
+### Using Geonames
+
+What can we do? Get access to lots of geographical information via the various ["web services"](http://www.geonames.org/export/ws-overview.html). Remember to pass the key first, otherwise the API won't work.
+
+```{r}
+# unsafe, use the other option if you plan to share your code
+options(geonamesUsername = "my_user_name")
+```
+
+```{r geonames-country-info}
+countryInfo <- GNcountryInfo()
+```
+
+```{r geonames-str}
+countryInfo %>%
+  as_tibble() %>%
+  glimpse()
+```
+
+This country info dataset is very helpful for accessing the rest of the data, because it gives us the standardized codes for country and language.  

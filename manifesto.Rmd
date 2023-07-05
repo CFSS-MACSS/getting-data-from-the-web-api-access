@@ -1,0 +1,90 @@
+---
+title: "Manifesto Project"
+output: html_document
+---
+
+## The Manifesto Project with `manifestoR`
+
+[The Manifesto Project](https://manifesto-project.wzb.eu/) collects and organizes political party manifestos from around the world. It currently covers over 1000 parties from 1945 until today in over 50 countries on five continents. We can use the [`manifestoR` package](https://github.com/ManifestoProject/manifestoR) to access the API and download those manifestos for analysis in R.
+
+### Load library and set API key
+
+## API authentication
+
+Accessing data from the Manifesto Project API requires an authentication key. You can create an account and key [here](https://manifesto-project.wzb.eu/signup). Here I store my key in `.Rprofile` and retrieve it using `mp_setapikey()` (different packages have different storage methods).
+
+```{r manifestor-load, message = FALSE, cache = FALSE}
+library(manifestoR)
+library(tidyverse)
+library(forcats)
+library(broom)
+library(wordcloud)
+library(tidytext)
+
+# retrieve API key stored in .Rprofile
+mp_setapikey(key = getOption("manifesto_key"))
+```
+
+### Retrieve the database
+
+```{r manifestor-db}
+(mpds <- mp_maindataset())
+```
+
+`mp_maindataset()` includes a data frame describing each manifesto included in the database. You can use this database for some exploratory data analysis. For instance, how many manifestos have been published by each political party in Sweden?
+
+```{r manifesto-dist}
+mpds %>%
+  filter(countryname == "Sweden") %>%
+  count(partyname) %>%
+  ggplot(aes(fct_reorder(partyname, n), n)) +
+  geom_col() +
+  labs(
+    title = "Political manifestos published in Sweden",
+    x = NULL,
+    y = "Total (1948-present)"
+  ) +
+  coord_flip()
+```
+
+Or we can use **scaling functions** to identify each party manifesto on an ideological dimension. For example, how have the Democratic and Republican Party manifestos in the United States changed over time?
+
+```{r manifestor-usa}
+mpds %>%
+  filter(party == 61320 | party == 61620) %>%
+  mutate(ideo = mp_scale(.)) %>%
+  select(partyname, edate, ideo) %>%
+  ggplot(aes(edate, ideo, color = partyname)) +
+  geom_line() +
+  scale_color_manual(values = c("blue", "red")) +
+  labs(
+    title = "Ideological scaling of major US political parties",
+    x = "Year",
+    y = "Ideological position",
+    color = NULL
+  ) +
+  theme(legend.position = "bottom")
+```
+
+### Download manifestos
+
+`mp_corpus()` can be used to download the original manifestos as full text documents stored as a [**corpus**](/notes/text-analysis-workflow/#extract-documents-and-move-into-a-corpus). Once you obtain the corpus, you can perform [text analysis](/notes/text-analysis-workflow/). As an example, let's compare the most common words in the Democratic and Republican Party manifestos from the 2016 U.S. presidential election:
+
+```{r manifestor-corpus, message = FALSE, warning = FALSE}
+# download documents
+(docs <- mp_corpus(countryname == "United States" & edate > as.Date("2016-01-01")))
+
+# generate wordcloud of most common terms
+docs %>%
+  tidy() %>%
+  mutate(party = factor(party,
+    levels = c(61320, 61620),
+    labels = c("Democratic Party", "Republican Party")
+  )) %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>%
+  count(party, word, sort = TRUE) %>%
+  drop_na() %>%
+  reshape2::acast(word ~ party, value.var = "n", fill = 0) %>%
+  comparison.cloud(max.words = 200)
+```
