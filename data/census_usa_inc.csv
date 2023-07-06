@@ -1,0 +1,53 @@
+GEOID,NAME,variable,estimate,moe
+01,Alabama,medincome,50536,304
+02,Alaska,medincome,77640,1015
+04,Arizona,medincome,58945,266
+05,Arkansas,medincome,47597,328
+06,California,medincome,75235,232
+08,Colorado,medincome,72331,370
+09,Connecticut,medincome,78444,553
+10,Delaware,medincome,68287,696
+11,District of Columbia,medincome,86420,1008
+12,Florida,medincome,55660,220
+13,Georgia,medincome,58700,294
+15,Hawaii,medincome,81275,780
+16,Idaho,medincome,55785,539
+17,Illinois,medincome,65886,283
+18,Indiana,medincome,56303,271
+19,Iowa,medincome,60523,321
+20,Kansas,medincome,59597,337
+21,Kentucky,medincome,50589,294
+22,Louisiana,medincome,49469,392
+23,Maine,medincome,57918,496
+24,Maryland,medincome,84805,465
+25,Massachusetts,medincome,81215,429
+26,Michigan,medincome,57144,216
+27,Minnesota,medincome,71306,262
+28,Mississippi,medincome,45081,385
+29,Missouri,medincome,55461,294
+30,Montana,medincome,54970,606
+31,Nebraska,medincome,61439,416
+32,Nevada,medincome,60365,409
+33,New Hampshire,medincome,76768,728
+34,New Jersey,medincome,82545,400
+35,New Mexico,medincome,49754,430
+36,New York,medincome,68486,313
+37,North Carolina,medincome,54602,231
+38,North Dakota,medincome,64894,813
+39,Ohio,medincome,56602,213
+40,Oklahoma,medincome,52919,225
+41,Oregon,medincome,62818,304
+42,Pennsylvania,medincome,61744,189
+44,Rhode Island,medincome,67167,958
+45,South Carolina,medincome,53199,276
+46,South Dakota,medincome,58275,643
+47,Tennessee,medincome,53320,260
+48,Texas,medincome,61874,208
+49,Utah,medincome,71621,447
+50,Vermont,medincome,61973,662
+51,Virginia,medincome,74222,341
+53,Washington,medincome,73775,298
+54,West Virginia,medincome,46711,492
+55,Wisconsin,medincome,61747,204
+56,Wyoming,medincome,64049,707
+72,Puerto Rico,medincome,20539,185

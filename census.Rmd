@@ -18,7 +18,8 @@ library(viridis)
 ```
 
 ```{r}
-census_api_key("YOUR API KEY GOES HERE", install = TRUE)
+# uncomment this out for your own code
+#census_api_key("YOUR API KEY GOES HERE", install = TRUE) 
 ```
 
 
@@ -113,12 +114,12 @@ usa_inc %>%
 
 ### Drawing maps
 
-`tidycensus` also can return [simple feature geometry](/notes/simple-features/) for geographic units along with variables from the decennial Census or ACS, which can then be [visualized using `geom_sf()`.](/notes/vector-maps/). Let's look at median household income by Census tracts from the 2014-2019 ACS in Loudoun County, Virginia:
+`tidycensus` also can return [simple feature geometry](/notes/simple-features/) for geographic units along with variables from the decennial Census or ACS, which can then be [visualized using `geom_sf()`.](/notes/vector-maps/). Let's look at median household income by Census tracts from the 2014-2019 ACS in Polk County, Iowa:
 
-```{r loudoun-sf, message = FALSE, results = "hide"}
-loudoun <- get_acs(
-  state = "VA",
-  county = "Loudoun",
+```{r polk-sf, message = FALSE, results = "hide"}
+polk <- get_acs(
+  state = "IA",
+  county = "Polk",
   geography = "tract",
   variables = c(medincome = "B19013_001"),
   year = 2019,
@@ -126,14 +127,14 @@ loudoun <- get_acs(
 )
 ```
 
-```{r loudoun-sf-print, dependson = "loudoun-sf"}
-loudoun
+```{r polk-sf-print, dependson = "polk-sf"}
+polk
 ```
 
 This looks similar to the previous output but because we set `geometry = TRUE` it is now a simple features data frame with a `geometry` column defining the geographic feature. We can visualize it using `geom_sf()` and `viridis::scale_*_viridis()` to adjust the color palette.
 
-```{r loudoun-sf-plot, dependson = "loudoun-sf"}
-ggplot(data = loudoun) +
+```{r polk-sf-plot, dependson = "polk-sf"}
+ggplot(data = polk) +
   geom_sf(mapping = aes(fill = estimate, color = estimate)) +
   coord_sf(crs = 26911) +
   scale_fill_viridis(
@@ -141,4 +142,18 @@ ggplot(data = loudoun) +
     labels = scales::dollar,
     aesthetics = c("fill", "color")
   )
+```
+
+
+```{r export-data}
+
+write_csv(asia_pop, "data/census_asia_pop.csv")
+write_csv(asia10, "data/census_asia10.csv")
+write_csv(polk, "data/census_polk.csv")
+write_csv(usa_inc, "data/census_usa_inc.csv")
+```
+
+
+```{r}
+sessioninfo::session_info()
 ```
