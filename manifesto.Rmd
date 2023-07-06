@@ -27,7 +27,7 @@ mp_setapikey(key = getOption("manifesto_key"))
 
 ### Retrieve the database
 
-```{r manifestor-db}
+```{r manifestor-db, warning=FALSE}
 (mpds <- mp_maindataset())
 ```
 
@@ -87,4 +87,15 @@ docs %>%
   drop_na() %>%
   reshape2::acast(word ~ party, value.var = "n", fill = 0) %>%
   comparison.cloud(max.words = 200)
+```
+
+```{r export-data}
+
+write_csv(mpds, "data/manifesto_mpds.csv")
+
+```
+
+
+```{r}
+sessioninfo::session_info()
 ```
