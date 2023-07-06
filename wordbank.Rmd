@@ -110,3 +110,16 @@ ggplot(data = female_vars, mapping = aes(x = fem_educ_sec, y = fem_lab_part)) +
     caption = "Source: World Bank"
   )
 ```
+
+
+```{r export-data}
+
+write_csv(female_labor, "data/wb_female_labor.csv")
+write_csv(female_vars, "data/wb_female_vars.csv")
+
+```
+
+
+```{r}
+sessioninfo::session_info()
+```
